@@ -19,8 +19,8 @@ export class TareaService {
     return this.http.post(this.apiUrl, tarea);
   }
 
-  update(id:number, tarea:Tarea){
-    return this.http.put(this.apiUrl + "/" + id, tarea);
+  update(tarea:Tarea){
+    return this.http.put(this.apiUrl, tarea);
   }
 
   delete(id:number){

@@ -9,26 +9,27 @@ import { Tarea } from '../model/tarea';
 })
 export class TareasComponent {
   tareas: Tarea[] = [];
-
-  tarea: Tarea = new Tarea();
+  tareaNueva: Tarea = new Tarea();
+  titulo:string;
+  btnAgregarEditar:string;
 
   constructor(private tareaService: TareaService) {
-    this.tarea.nombre = '';
-    this.tarea.completada = false;
+    this.titulo = 'Nueva tarea';
+    this.btnAgregarEditar = 'Agregar tarea'
+    this.tareaNueva.nombre = '';
+    this.tareaNueva.completada = false;
     this.getAll();
   }
 
   getAll() {
     this.tareaService.getAll().subscribe((tareasObtenidas) => {
-      console.log(tareasObtenidas);
       this.tareas = Object.values(tareasObtenidas);
     });
   }
 
   guardarTarea() {
-    console.log(this.tarea.nombre + this.tarea.completada);
-    if (this.tarea.nombre != '') {
-      this.tareaService.create(this.tarea).subscribe({
+    if (this.tareaNueva.nombre != '') {
+      this.tareaService.create(this.tareaNueva).subscribe({
         next: () => {
           window.location.reload();
         },
@@ -38,11 +39,21 @@ export class TareasComponent {
   }
 
   eliminarTarea(id:number){
-    this.tareaService.delete(id).subscribe({
-      next: () => {
-        window.location.reload();
-      },
-      error: () => {},
-    });
+    var confirmacion = confirm("¿Esta seguro de eliminar tarea con id: " + id + "?");
+    if(confirmacion){
+      this.tareaService.delete(id).subscribe({
+        next: () => {
+          window.location.reload();
+        },
+        error: () => {},
+      });
+    }
   }
+
+  editar(tarea:Tarea){
+    this.titulo = 'Editar tarea';
+    this.btnAgregarEditar = 'Actualizar';
+    this.tareaNueva = tarea;
+  }
+
 }
