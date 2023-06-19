@@ -16,12 +16,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let tarea of tareas">
-                <th>{{tarea.id}}</th>
-                <td>{{tarea.nombre}}</td>
-                <td>{{tarea.completada}}</td>
+              <tr *ngFor="let t of tareas">
+                <th>{{t.id}}</th>
+                <td>{{t.nombre}}</td>
                 <td>
-                  <button class="btn btn-sm btn-danger">Eliminar</button>
+                  <span *ngIf="t.completada; else tareaIncompleta">Si</span>
+                  <ng-template #tareaIncompleta>No</ng-template>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-danger" (click)="eliminarTarea(t.id)">Eliminar</button>
                 </td>
               </tr>
           </table>
@@ -34,19 +37,29 @@
           <h3>Nueva tarea</h3>
         </div>
         <div class="card-body">
-          <form class="">
+          <form>
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Ingrese nombre de tarea">
+              <input 
+              type="text" 
+              class="form-control" 
+              id="nombre" 
+              name="tarea.nombre"
+              placeholder="Ingrese nombre de tarea" 
+              [(ngModel)]="tarea.nombre">
             </div>
             <div class="mb-3 form-check">
               <label class="form-check-label">
                 Completada
-                <input type="checkbox" class="form-check-input">
+                <input 
+                name="tarea.completada"
+                type="checkbox" 
+                class="form-check-input" 
+                [(ngModel)]="tarea.completada">
               </label>
             </div>
             <div class="text-end">
-              <button class="btn btn-success">Agregar tarea</button>
+              <button type="submit" (click)="guardarTarea()" class="btn btn-success">Agregar tarea</button>
             </div>
           </form>
         </div>

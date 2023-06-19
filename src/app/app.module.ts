@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { TareasComponent } from './tareas/tareas.component';
 import { TareaService } from './tarea.service';
 
-import  { HttpClientModule } from '@angular/common/http'
+import  { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import  { HttpClientModule } from '@angular/common/http'
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [TareaService],
   bootstrap: [AppComponent]
