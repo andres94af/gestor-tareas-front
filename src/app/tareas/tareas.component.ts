@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TareaService } from '../tarea.service';
-import { Tarea } from '../model/tarea';
+import { Tarea } from '../model/models';
 
 @Component({
   selector: 'app-tareas',
@@ -10,12 +10,12 @@ import { Tarea } from '../model/tarea';
 export class TareasComponent {
   tareas: Tarea[] = [];
   tareaNueva: Tarea = new Tarea();
-  titulo:string;
-  btnAgregarEditar:string;
+  titulo: string;
+  btnAgregarEditar: string;
 
   constructor(private tareaService: TareaService) {
     this.titulo = 'Nueva tarea';
-    this.btnAgregarEditar = 'Agregar tarea'
+    this.btnAgregarEditar = 'Agregar tarea';
     this.tareaNueva.nombre = '';
     this.tareaNueva.completada = false;
     this.getAll();
@@ -38,9 +38,11 @@ export class TareasComponent {
     }
   }
 
-  eliminarTarea(id:number){
-    var confirmacion = confirm("¿Esta seguro de eliminar tarea con id: " + id + "?");
-    if(confirmacion){
+  eliminarTarea(id: number) {
+    var confirmacion = confirm(
+      '¿Esta seguro de eliminar tarea con id: ' + id + '?'
+    );
+    if (confirmacion) {
       this.tareaService.delete(id).subscribe({
         next: () => {
           window.location.reload();
@@ -50,10 +52,9 @@ export class TareasComponent {
     }
   }
 
-  editar(tarea:Tarea){
+  editar(tarea: Tarea) {
     this.titulo = 'Editar tarea';
     this.btnAgregarEditar = 'Actualizar';
     this.tareaNueva = tarea;
   }
-
 }

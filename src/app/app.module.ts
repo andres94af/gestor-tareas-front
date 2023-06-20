@@ -6,13 +6,18 @@ import { AppComponent } from './app.component';
 import { TareasComponent } from './tareas/tareas.component';
 import { TareaService } from './tarea.service';
 
-import  { HttpClientModule } from '@angular/common/http';
+import  { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { AuthInterceptor } from './helpers/auth.interceptor';
+import { InicioComponent } from './inicio/inicio.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TareasComponent
+    TareasComponent,
+    LoginComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +25,9 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
-  providers: [TareaService],
+  providers: [TareaService,
+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
